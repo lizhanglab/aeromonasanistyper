@@ -1,8 +1,12 @@
+import sys
 import argparse
+if sys.version_info >= (3, 9):
+    from importlib import resources
+else:
+    import importlib_resources as resources
 import csv
-import os
 import io
-from importlib import resources
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -42,24 +46,29 @@ def run_fastANI(args):
 
     # Create temporary files and run fastANI
     with tempfile.NamedTemporaryFile(mode='w', delete=False, dir=temp_directory) as ql_file, \
-             tempfile.NamedTemporaryFile(mode='w', delete=False, dir=temp_directory) as rl_file:
-        
+        tempfile.NamedTemporaryFile(mode='w', delete=False, dir=temp_directory) as rl_file:
+    
+        for file in query_genomes:
+            ql_file.write(file + '\n')
+        for file in reference_genomes:
+            rl_file.write(file + '\n')
+
         ql_file.close()
         rl_file.close()
 
-            raw_ANI_result = os.path.join(temp_directory, 'fastani_output.txt')
-            fastani_command = ['fastANI', "-t", str(args.thread),'--ql', ql_file.name, '--rl', rl_file.name, '-o', raw_ANI_result]
-            
-            try:
-                subprocess.run(fastani_command, check=True)
-                print("FastANI run completed successfully.")
-            except subprocess.CalledProcessError as e:
-                print(f"FastANI run encountered an error: {e}")
-            finally:
-                if os.path.exists(ql_file.name):
-                    os.remove(ql_file.name)
-                if os.path.exists(rl_file.name):
-                    os.remove(rl_file.name)
+        raw_ANI_result = os.path.join(temp_directory, 'fastani_output.txt')
+        fastani_command = ['fastANI', "-t", str(args.thread),'--ql', ql_file.name, '--rl', rl_file.name, '-o', raw_ANI_result]
+        
+        try:
+            subprocess.run(fastani_command, check=True)
+            print("FastANI run completed successfully.")
+        except subprocess.CalledProcessError as e:
+            print(f"FastANI run encountered an error: {e}")
+        finally:
+            if os.path.exists(ql_file.name):
+                os.remove(ql_file.name)
+            if os.path.exists(rl_file.name):
+                os.remove(rl_file.name)
 
     return raw_ANI_result
 
@@ -78,10 +87,10 @@ def ksi(fastANI_output, args):
             tsv_reader = resources.read_text('aeromonasgstyper.Resources', 'reference_list.tsv')
         except FileNotFoundError:
             print("CRITICAL ERROR: Could not find bundled 'reference_list.tsv'. Installation may be corrupted.")
-            return
+            sys.exit(1)
         
     # Load Data
-    tsv_file = io.StringIO(tsv_content)
+    tsv_file = io.StringIO(tsv_reader)
     reader = csv.DictReader(tsv_file, delimiter='\t')
     for row in reader:
         genomic_species[row["genome"]] = row["species"]
@@ -133,7 +142,7 @@ def parseargs():
     
 def main():
     args = parseargs()
-    fastANI_output = run_fastANI(args)
+    fastANI_output = run_fastANI(args)    
     ksi(fastANI_output, args)
 
 if __name__ == '__main__':
