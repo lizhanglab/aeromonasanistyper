@@ -115,7 +115,7 @@ def ksi(fastANI_output, args):
         for query_genome, (highest_ani, reference_genome) in highest_ani_values.items():
             reference_species = genomic_species.get(reference_genome, "UNKNOWN_REFERENCE")
             
-            if highest_ani >= 94.2:
+            if highest_ani >= 95.6
                 output_file.write(f"{query_genome}\t{highest_ani}\t{reference_genome}\t{reference_species}\n")
             else:
                 output_file.write(
@@ -125,18 +125,26 @@ def ksi(fastANI_output, args):
 
 
 def parseargs():
-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description='A tool for Aeromonas species identification using ANI.',
+        usage='aeromonasgstyper -i <query_folder> -o <output.tsv> [OPTIONS]'
+    )
 
-    parser.add_argument("-i", "--query", help="input query genome folder. File types .fasta .fas .fa .fna are recognised",
+    required_group = parser.add_argument_group('Required Inputs')
+
+    required_group.add_argument("-i", "--query", help="input query genome folder. File types .fasta .fas .fa .fna are recognised",
                         required=True)
-    parser.add_argument("-r", "--reference", help="folder for reference genomes") 
-    
-    parser.add_argument("-l", "--reference_list", help="file listing species for reference genomes")
-    
-    parser.add_argument("-o", "--output", help="species identifier output tsv file", 
+    required_group.add_argument("-o", "--output", help="species identifier output tsv file", 
                         required=True)
-    parser.add_argument("-t", "--thread", help="number of threads to run fastANI",
+    
+    reference_group = parser.add_argument_group('Reference Input Options')
+    reference_group.add_argument("-r", "--reference", help="folder for reference genomes")     
+    reference_group.add_argument("-l", "--reference_list", help="file listing species for reference genomes")
+    
+    settings_group = parser.add_argument_group('Thread Settings')
+    settings_group.add_argument("-t", "--thread", type=int, help="number of threads to run fastANI",
                         default=4)
+    
     args = parser.parse_args()
     return args
     

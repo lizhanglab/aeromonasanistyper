@@ -4,9 +4,10 @@ Aeromonas Genomic Species Typer. A python script for accurate assignment of ANI 
 ## Installation
 
 ```
+# fastANI must be installed separately for the program to work!!
 git clone https://github.com/lizhanglab/aeromonasgstyper.git
 cd aeromonasgstyper
-# Recommended install in venv
+# Recommended pip install in a virtual environment (venv, conda)
 pip install .
 ```
 
@@ -27,8 +28,8 @@ pip install .
 
 ## Outputs
 A tab delimited file with the following columns:
-* **Query Genome** : genome name extracted from file name
-* **Highest ANI Value** : The highest ANI value of the query when compared to all centroid genomes
-* **Matching centroid genome** : The accession of the highest matching centroid genome
-* **Aeromonas Genomic Species** : The genomic species name assigned to the matching ANI cluster
+* **Query Genome** : genome name extracted from file name.
+* **Highest ANI Value** : The highest ANI value of the query when compared to all centroid genomes.
+* **Matching centroid genome** : The accession of the highest matching centroid genome.
+* **Aeromonas Genomic Species** : The genomic species name assigned to the matching genome at 95.6% ANI.
 * **Possible Novel genomic species** : When this genome does not match any centroid genome at 95.6% ANI. If no centroid genomes match it indicates that the genome could represent a new species. If true, the highest match is still included but it is not reliable.
