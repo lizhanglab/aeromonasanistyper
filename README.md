@@ -6,7 +6,8 @@ Aeromonas Genomic Species Typer. A python script for accurate assignment of ANI 
 ```
 git clone https://github.com/lizhanglab/aeromonasgstyper.git
 cd aeromonasgstyper
-python setup.py install
+# Recommended install in venv
+pip install .
 ```
 
 **Note: the following dependencies must be installed**
