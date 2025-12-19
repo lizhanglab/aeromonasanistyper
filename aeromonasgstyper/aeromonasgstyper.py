@@ -115,7 +115,7 @@ def ksi(fastANI_output, args):
         for query_genome, (highest_ani, reference_genome) in highest_ani_values.items():
             reference_species = genomic_species.get(reference_genome, "UNKNOWN_REFERENCE")
             
-            if highest_ani >= 95.6
+            if highest_ani >= 95.2
                 output_file.write(f"{query_genome}\t{highest_ani}\t{reference_genome}\t{reference_species}\n")
             else:
                 output_file.write(
