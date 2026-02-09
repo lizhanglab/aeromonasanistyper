@@ -1,5 +1,5 @@
 # aeromonasanistyper
-Aeromonas ANI defined Species Typer. A python script for accurate assignment of ANI defined species to the Aeromonas genus.
+*Aeromonas* ANI defined Species Typer. A python script for accurate assignment of ANI defined species to the *Aeromonas* genus.
 
 ## Installation
 
@@ -31,5 +31,5 @@ A tab delimited file with the following columns:
 * **Query Genome** : genome name extracted from file name.
 * **Highest ANI Value** : The highest ANI value of the query when compared to all centroid genomes.
 * **Matching centroid genome** : The accession of the highest matching centroid genome.
-* **Aeromonas Genomic Species** : The genomic species name assigned to the matching genome at 95.2% ANI.
+* ***Aeromonas* ANI Species** : The species name assigned to the matching genome at 95.2% ANI.
 * **Possible Novel genomic species** : When this genome does not match any centroid genome at 95.2% ANI. If no centroid genomes match it indicates that the genome could represent a new species. If true, the highest match is still included but it is not reliable.
