@@ -1,12 +1,12 @@
-# AeromonasGStyper
-Aeromonas Genomic Species Typer. A python script for accurate assignment of ANI genomic species to the Aeromonas genus.
+# aeromonasanistyper
+Aeromonas ANI defined Species Typer. A python script for accurate assignment of ANI defined species to the Aeromonas genus.
 
 ## Installation
 
 ```
 # fastANI must be installed separately for the program to work!!
-git clone https://github.com/lizhanglab/aeromonasgstyper.git
-cd aeromonasgstyper
+git clone https://github.com/lizhanglab/aeromonasanistyper.git
+cd aeromonasanistyper
 # Recommended pip install in a virtual environment (venv, conda)
 pip install .
 ```
@@ -16,7 +16,7 @@ pip install .
 
 ## Usage
 
-`aeromonasgstyper [-h] -i QUERYFOLDER -o OUTPUTFILE [-t THREADS]`
+`aeromonasanistyper [-h] -i QUERYFOLDER -o OUTPUTFILE [-t THREADS]`
 
 `-h`, `--help` show this help message and exit
 
