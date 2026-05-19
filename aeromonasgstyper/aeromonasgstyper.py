@@ -24,7 +24,7 @@ def find_files_by_pathlib(directory_path):
     return all_files
 
 def get_resource_directory_path():
-    return resources.files('aeromonasanistyper.Resources')
+    return resources.files('aeromonasgstyper.Resources')
 
 def run_fastANI(args):
     temp_directory = "fastANI_result"
@@ -39,7 +39,7 @@ def run_fastANI(args):
     else:
         # Use installed resources
         print("Using bundled reference genome folder.")
-        with resources.as_file(resources.files('aeromonasanistyper.Resources')) as installed_resource_path:
+        with resources.as_file(resources.files('aeromonasgstyper.Resources')) as installed_resource_path:
             reference_genomes = find_files_by_pathlib(installed_resource_path)
 
     query_genomes = find_files_by_pathlib(args.query)
@@ -84,7 +84,7 @@ def ksi(fastANI_output, args):
         # Use installed resources
         print("Using bundled reference list file.")
         try:
-            tsv_reader = resources.read_text('aeromonasanistyper.Resources', 'reference_list.tsv')
+            tsv_reader = resources.read_text('aeromonasgstyper.Resources', 'reference_list.tsv')
         except FileNotFoundError:
             print("CRITICAL ERROR: Could not find bundled 'reference_list.tsv'. Installation may be corrupted.")
             sys.exit(1)
@@ -127,7 +127,7 @@ def ksi(fastANI_output, args):
 def parseargs():
     parser = argparse.ArgumentParser(
         description='A tool for Aeromonas species identification using ANI.',
-        usage='aeromonasanistyper -i <query_folder> -o <output.tsv> [OPTIONS]'
+        usage='aeromonasgstyper -i <query_folder> -o <output.tsv> [OPTIONS]'
     )
 
     required_group = parser.add_argument_group('Required Inputs')

@@ -1,11 +1,11 @@
 from setuptools import setup,find_packages
-from aeromonasanistyper import __version__
+from aeromonasgstyper import __version__
 
 def readme():
     with open('README.md') as f:
         return f.read()
 
-setup(name='aeromonasanistyper',
+setup(name='aeromonasgstyper',
       version=__version__,
       description='assignment of ANI defined species to Aeromonas genomes',
       long_description=readme(),
@@ -18,13 +18,13 @@ setup(name='aeromonasanistyper',
           'Intended Audience :: Science/Research',
       ],
       keywords='genomic taxonomy aeromonas ANI',
-      url='https://github.com/lizhanglab/aeromonasanistyper',
+      url='https://github.com/lizhanglab/aeromonasgstyper',
       author='Alex Lu',
       author_email='alex.c.lu@unsw.edu.au',
       license='GPLv3',
       packages=find_packages(exclude=['tests', 'docs']),
       include_package_data=True,
       entry_points={
-          'console_scripts': ['aeromonasanistyper=aeromonasanistyper.aeromonasanistyper:main'],
+          'console_scripts': ['aeromonasgstyper=aeromonasgstyper.aeromonasgstyper:main'],
       },
       zip_safe=False)
