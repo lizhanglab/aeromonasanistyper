@@ -1,4 +1,4 @@
-# aeromonasgstyper
+# AeromonasGStyper
 *Aeromonas* ANI defined Species Typer. A python script for accurate assignment of ANI defined species to the *Aeromonas* genus.
 
 ## Installation
