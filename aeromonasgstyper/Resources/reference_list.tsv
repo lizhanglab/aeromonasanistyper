@@ -1,39 +1,45 @@
 genome	species
-GCF_030514525.1	Aeromonas simiae
-GCF_040790265.1	Aeromonas diversa
-DRR293937	Aeromonas schubertii
-GCF_003265565.1	Aeromonas bivalvium
-SRR32477519	Aeromonas molluscorum
-GCF_024809075.1	Aeromonas rivuli
-ERR4559376	Aeromonas enteropelogenes
-GCF_034721165.1	Aeromonas jandaei
-SRR24219967	Aeromonas sobria
-SRR29645202	Aeromonas allosaccharophila
-SRR15464897	Aeromonas genomic spp. 1
-SRR11281514	Aeromonas veronii
-SRR13288071	Aeromonas genomic spp. 2
-ERR660686	Aeromonas australiensis
-ERR660681	Aeromonas fluvialis
-GCF_041929505.1	Aeromonas finlandensis
-SRR26182261	Aeromonas salmonicida
-GCF_018138755.1	Aeromonas popoffii
-ERR14335777	Aeromonas bestiarum
-ERR12867583	Aeromonas dhakensis
-SRR3656082	Aeromonas hydrophila
-ERR595939	Aeromonas media
-GCF_030386695.1	Aeromonas rivipollensis
-ERR4559438	Aeromonas caviae
-GCF_004524025.1	Aeromonas taiwanensis
-SRR31059843	Aeromonas sanarellii
-GCF_000820185.1	Aeromonas tecta
-GCF_002812985.1	Aeromonas lusitana
-GCF_900637545.1	Aeromonas encheleia
-GCF_000819865.1	Aeromonas eucrenophila
-GCF_022549315.1	Aeromonas aquatica
-GCF_040215105.1	Aeromonas intestinalis (Aeromonas genomic spp. 3)
-GCF_002795305.1	Aeromonas cavernicola
-SRR5194379	Aeromonas genomic spp. 4
-GCF_054052485.1  Aeromonas crassostreae
-GCF_054052465.1  Aeromonas enterica
-GCF_051657805.1  Aeromonas genomic spp. 5
-GCF_056279295.1  Aeromonas genomic spp. 6
+GCF_030514505.1	Aeromonas simiae 
+ERR595944	Aeromonas diversa 
+ERR660675	Aeromonas schubertii 
+GCF_003265565.1	Aeromonas bivalvium 
+GCF_046078105.1	Aeromonas crassostreae 
+ERR3330769	Aeromonas molluscorum 
+GCF_024809075.1	Aeromonas rivuli 
+SRR11247098	Aeromonas enteropelogenes 
+SRR30628340	Aeromonas lacus 
+GCF_036687345.1	Aeromonas jandaei 
+SRR13266909	Aeromonas sobria 
+GCF_055193095.1	Aeromonas genomic species 1  
+ERR660686	Aeromonas australiensis 
+SRR29645098	Aeromonas allosaccharophila 
+GCF_010906985.2	Cluster 15 (Aeromonas allosaccharophila) 
+GCF_049175275.1	Aeromonas genomic species 2  
+GCF_019047065.1	Aeromonas genomic species  3
+SRR11281514	Aeromonas veronii 
+SRR13288071	Aeromonas genomic species  4
+ERR660681	Aeromonas fluvialis 
+GCF_041929505.1	Aeromonas genomic species 5
+SRR32477586	Aeromonas salmonicida 
+GCF_054052825.1	Aeromonas popoffii 
+GCF_054052805.1	Aeromonas piscicola 
+GCF_965138935.1	Aeromonas bestiarum 
+GCF_054052465.1	Aeromonas enterica 
+GCF_054052785.1	Aeromonas encheleia 
+GCF_054052525.1	Aeromonas eucrenophila 
+GCF_000764655.1	Aeromonas aquatica 
+GCF_056279295.1	Aeromonas genomic species  6
+GCF_051125555.1	Aeromonas intestinalis 
+GCF_051657805.1	Aeromonas genomic species  7
+GCF_000820185.1	Aeromonas tecta 
+GCF_002812985.1	Aeromonas lusitana 
+ERR12867582	Aeromonas dhakensis 
+SRR3656082	Aeromonas hydrophila 
+DRR199331	Aeromonas media 
+GCF_044336385.1	Aeromonas rivipollensis 
+GCF_045015385.1	Aeromonas genomic species  8
+GCF_024347695.1	Aeromonas caviae 
+GCF_019048365.1	Aeromonas taiwanensis 
+GCF_019048705.1	Aeromonas sanarellii 
+GCF_002795305.1	Aeromonas cavernicola 
+SRR5194379	Aeromonas genomic species  9
