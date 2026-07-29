@@ -47,7 +47,6 @@ def _write_genome_list(paths, file_obj):
 # fastANI
 
 def run_fastani(args, out_dir, temp_dir):
-    """Run fastANI and return path to raw output file."""
     reference_genomes, _ = _resolve_reference_genomes(args)
     query_genomes = find_files_by_pathlib(args.query)
 
@@ -128,7 +127,6 @@ def _ensure_reference_sketches(args, reference_genomes):
 
 
 def run_skani(args, out_dir, temp_dir):
-    """Run skANI search and return normalised output path."""
     reference_genomes, _ = _resolve_reference_genomes(args)
     query_genomes = find_files_by_pathlib(args.query)
     sketch_dir = _ensure_reference_sketches(args, reference_genomes)
@@ -142,12 +140,12 @@ def run_skani(args, out_dir, temp_dir):
         return None
 
     raw_output  = os.path.join(out_dir, 'skani_output.txt')
+    norm_output = os.path.join(out_dir, 'skani_norm_output.txt')
 
     with tempfile.NamedTemporaryFile(mode='w', delete=False, dir=temp_dir) as ql:
         _write_genome_list(query_genomes, ql)
         ql.close()
 
-        # skani search queries a sketch database (-d)
         cmd = ['skani', 'search',
                '-t', str(args.thread),
                '--ql', ql.name,
@@ -164,7 +162,6 @@ def run_skani(args, out_dir, temp_dir):
             if os.path.exists(ql.name):
                 os.remove(ql.name)
 
-    # Normalise column order: skani outputs Ref, Query, ANI — reorder to Query, Ref, ANI
     with open(raw_output) as fin, open(norm_output, 'w') as fout:
         for i, line in enumerate(fin):
             if i == 0 and line.startswith("Ref_file"):
@@ -180,29 +177,38 @@ def run_skani(args, out_dir, temp_dir):
 
 # Species ID
 
+_REF_COL_GENOME  = "genome"
+_REF_COL_CLUSTER = "ANI cluster"
+_REF_COL_SPECIES = "genomic species"
+_REF_REQUIRED_COLS = {_REF_COL_GENOME, _REF_COL_CLUSTER, _REF_COL_SPECIES}
+
 def _load_reference_species(args):
     if args.reference_list and os.path.exists(args.reference_list):
         print(f"Using user-provided reference list file: {args.reference_list}")
-        with open(args.reference_list, encoding='utf-8') as f:
-            tsv_content = f.read()
+        tsv_path = args.reference_list
     else:
         print("Using bundled reference list file.")
         tsv_path = get_resource_directory_path() / 'reference_list.tsv'
-        if not tsv_path.exists():
+        if not Path(tsv_path).exists():
             print(f"CRITICAL ERROR: Could not find bundled 'reference_list.tsv' at {tsv_path}.")
             sys.exit(1)
-        with open(tsv_path, encoding='utf-8') as f:
-            tsv_content = f.read()
+ 
+    with open(tsv_path, encoding='utf-8') as f:
+        tsv_content = f.read()
 
-    species_map = {}
+    ref_map = {}
     reader = csv.DictReader(tsv_content.splitlines(), delimiter='\t')
     for row in reader:
-        species_map[row["genome"]] = row["species"]
-    return species_map
+        genome_stem = row[_REF_COL_GENOME].strip()
+        ref_map[genome_stem] = {
+            "ANI cluster":    row[_REF_COL_CLUSTER].strip(),
+            "Genomic species": row[_REF_COL_SPECIES].strip(),
+        }
+    return ref_map
 
 
 def ksi(ani_output, args, threshold, final_tsv_path):
-    species_map = _load_reference_species(args)
+    ref_map = _load_reference_species(args)
 
     highest_ani_values = {}
     with open(ani_output) as f:
@@ -221,25 +227,30 @@ def ksi(ani_output, args, threshold, final_tsv_path):
                ani_value > highest_ani_values[query_stem][0]:
                 highest_ani_values[query_stem] = (ani_value, ref_stem)
 
+    unknown = {"ANI cluster": "UNKNOWN", "Genomic species": "UNKNOWN_REFERENCE"}
+
     with open(final_tsv_path, 'w') as out:
         tool_name = args.ani_tool.lower()
         out.write(
             f"Query Genome\t"
             f"Highest ANI similarity ({tool_name}, threshold: {threshold}%)\t"
             f"Reference Genome with the highest ANI similarity\t"
+            f"ANI cluster\t"
             f"Reference ANI Species\n"
         )
 
         for query, (highest_ani, ref_genome) in highest_ani_values.items():
-            ref_species = species_map.get(ref_genome, "UNKNOWN_REFERENCE")
+            ref_info = ref_map.get(ref_genome, unknown)
+            ani_cluster = ref_info["ANI cluster"]
+            ref_species = ref_info["Genomic species"]
 
             if round(highest_ani, 1) >= threshold:
-                out.write(f"{query}\t{highest_ani}\t{ref_genome}\t{ref_species}\n")
+                out.write(f"{query}\t{highest_ani}\t{ref_genome}\t{ani_cluster}\t{ref_species}\n")
             else:
                 out.write(
                     f"{query}\t{highest_ani}\t{ref_genome}\t"
-                    f"Novel (closest {ref_species})\t"
-                    f"Potential Novel Aeromonas ANI species\n"
+                    f"{ani_cluster}\t"
+                    f"Novel (closest {ref_species})\n"
                 )
 
     print(f"Final species identification saved to: {final_tsv_path}")
@@ -249,7 +260,7 @@ def ksi(ani_output, args, threshold, final_tsv_path):
 
 def parseargs():
     parser = argparse.ArgumentParser(
-        description='A tool for Aeromonas species identification using ANI.',
+        description='A tool for Aeromonas species identification using ANI. Requires fastANI or skANI.',
         usage='aeromonasgstyper -a <fastani|skani> -i <query_folder> -o <output_directory> [OPTIONS]'
     )
 
@@ -288,11 +299,9 @@ def parseargs():
 def main():
     args = parseargs()
 
-    # 1. Ensure the primary output directory exists
     out_dir = os.path.abspath(args.output)
     os.makedirs(out_dir, exist_ok=True)
 
-    # 2. Setup internal temp directory within output folder
     temp_dir = os.path.join(out_dir, ".tmp_ani")
     os.makedirs(temp_dir, exist_ok=True)
     
