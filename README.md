@@ -35,9 +35,7 @@ A tab delimited file with the following columns:
 **Note: When the similarity between genomes is too low, fastANI and skANI do not always produce an output (e.g. genome from a different genus).**
 
 1. **Query Genome** : genome name extracted from file name.
-2. **Highest ANI Value** : The highest ANI value of the query when compared to all centroid genomes.
-3. **Matching centroid genome** : The accession of the highest matching centroid genome.
-4. **ANI cluster of the matching centroid genome** : The cluster number of the highest matching centroid genome.
-5. 
-    * ***Aeromonas* genomic species** : The species name assigned to the matching genome at a 95.4% skANI threshold or a 95.6% fastANI threshold. Named species match existing taxonomic species. Genomic species are supported by core genome phylogeny but have not been assigned taxonomic species names formally.
-    * **Possible novel genomic species** : When the genome does not match any centroid genome at a 95.4% skANI threshold or a 95.6% fastANI threshold. If no centroid genomes match it indicates that the genome could represent a new genomic species. The highest match is still included but it is not reliable.
+2. **Highest ANI Value** : The highest ANI value of the query when compared to all medoid genomes.
+3. **Matching medoid genome** : The accession of the highest matching medoid genome.
+4. **ANI cluster of the matching medoid genome** : The cluster number of the highest matching medoid genome.
+5. ***Aeromonas* genomic species** : The species name assigned to the matching genome at a 95.4% skANI threshold or a 95.6% fastANI threshold. Where the assigned genomic species corresponds to a recognised taxonomic species, the recognised species name is reported. Where the assigned genomic species corresponds to an additional genomic species established in this study that does not correspond to a recognised taxonomic species, the corresponding genomic species designation is reported. Query genomes that do not meet the assignment threshold for any representative medoid genome are reported as a potentially novel genomic species with the information of the closest genomic species. 
