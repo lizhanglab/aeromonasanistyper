@@ -1,5 +1,5 @@
 # AeromonasGStyper
-*Aeromonas* Genomic Species Typer. A python script for accurate assignment using of species to the *Aeromonas* genus using skANI or fastANI.
+*Aeromonas* Genomic Species Typer. A python script for assignment using of species to the *Aeromonas* genus using skANI or fastANI.
 
 ## Installation
 
